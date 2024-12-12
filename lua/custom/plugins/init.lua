@@ -31,27 +31,27 @@ return {
         },
       }
 
-      vim.keymap.set('n', '<leader>ghs', gs.stage_hunk, { silent = true, desc = '[G]itsigns: [h]unk [s]tage' })
-      vim.keymap.set('n', '<leader>ghr', gs.reset_hunk, { silent = true, desc = '[G]itsigns: [h]unk [r]eset' })
+      vim.keymap.set('n', '<leader>ghs', gs.stage_hunk, { silent = true, desc = '[G]it [h]unk [s]tage' })
+      vim.keymap.set('n', '<leader>ghr', gs.reset_hunk, { silent = true, desc = '[G]it [h]unk [r]eset' })
       vim.keymap.set('v', '<leader>ghs', function()
         gs.stage_hunk { vim.fn.line '.', vim.fn.line 'v' }
-      end, { silent = true, desc = '[G]itsigns: [h]unk [s]tage' })
+      end, { silent = true, desc = '[G]it [h]unk [s]tage' })
       vim.keymap.set('v', '<leader>ghr', function()
         gs.reset_hunk { vim.fn.line '.', vim.fn.line 'v' }
-      end, { silent = true, desc = '[G]itsigns: [h]unk [r]eset' })
-      vim.keymap.set('n', '<leader>gbs', gs.stage_buffer, { silent = true, desc = '[G]itsigns: [b]uffer [s]tage' })
-      vim.keymap.set('n', '<leader>ghu', gs.undo_stage_hunk, { silent = true, desc = '[G]itsigns: [h]unk [u]ndo stage' })
-      vim.keymap.set('n', '<leader>gbr', gs.reset_buffer, { silent = true, desc = '[G]itsigns: [b]uffer [r]eset' })
-      vim.keymap.set('n', '<leader>ghp', gs.preview_hunk, { silent = true, desc = '[G]itsigns: [h]unk [p]review' })
+      end, { silent = true, desc = '[G]it [h]unk [r]eset' })
+      vim.keymap.set('n', '<leader>gbs', gs.stage_buffer, { silent = true, desc = '[G]it [b]uffer [s]tage' })
+      vim.keymap.set('n', '<leader>ghu', gs.undo_stage_hunk, { silent = true, desc = '[G]it [h]unk [u]ndo stage' })
+      vim.keymap.set('n', '<leader>gbr', gs.reset_buffer, { silent = true, desc = '[G]it [b]uffer [r]eset' })
+      vim.keymap.set('n', '<leader>ghp', gs.preview_hunk, { silent = true, desc = '[G]it [h]unk [p]review' })
       vim.keymap.set('n', '<leader>ghb', function()
         gs.blame_line { full = true }
-      end, { silent = true, desc = '[G]itsigns: [h]unk [b]lame' })
-      vim.keymap.set('n', '<leader>gtb', gs.toggle_current_line_blame, { silent = true, desc = '[G]itsigns: [t]oggle [b]lame' })
-      vim.keymap.set('n', '<leader>ghd', gs.diffthis, { silent = true, desc = '[G]itsigns: [h]unk [d]iff' })
+      end, { silent = true, desc = '[G]it [h]unk [b]lame' })
+      vim.keymap.set('n', '<leader>gtb', gs.toggle_current_line_blame, { silent = true, desc = '[G]it [t]oggle [b]lame' })
+      vim.keymap.set('n', '<leader>ghd', gs.diffthis, { silent = true, desc = '[G]it [h]unk [d]iff' })
       vim.keymap.set('n', '<leader>ghD', function()
         gs.diffthis '~'
-      end, { silent = true, desc = '[G]itsigns: [h]unk [D]iff' })
-      vim.keymap.set('n', '<leader>gtd', gs.toggle_deleted, { silent = true, desc = '[G]itsigns: [t]oggle [d]eleted' })
+      end, { silent = true, desc = '[G]it [h]unk [D]iff' })
+      vim.keymap.set('n', '<leader>gtd', gs.toggle_deleted, { silent = true, desc = '[G]it [t]oggle [d]eleted' })
     end,
   },
   --[[
