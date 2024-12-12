@@ -834,7 +834,15 @@ require('lazy').setup({
       }
     end,
   },
-
+  {
+    'L-Colombo/atlantic-dark.nvim',
+    -- vim.cmd.colorscheme 'atlantic-dark'
+  },
+  { 'neanias/everforest-nvim' },
+  { 'i3d/vim-jimbothemes' },
+  { 'rodnaph/vim-color-schemes' },
+  { 'realbucksavage/riderdark.vim' },
+  { 'rainglow/vim' },
   { -- You can easily change to a different colorscheme.
     -- Change the name of the colorscheme plugin below, and then
     -- change the command in the config to whatever the name of that colorscheme is.
