@@ -846,6 +846,9 @@ require('lazy').setup({
   { 'i3d/vim-jimbothemes' },
   { 'rodnaph/vim-color-schemes' },
   { 'realbucksavage/riderdark.vim' },
+  { 'rose-pine/neovim' },
+  { 'marko-cerovac/material.nvim' },
+  { 'Mofiqul/vscode.nvim' },
   {
     'rainglow/vim',
     priority = 1000, -- Make sure to load this before all the other start plugins.
