@@ -837,28 +837,32 @@ require('lazy').setup({
       }
     end,
   },
-  {
-    'L-Colombo/atlantic-dark.nvim',
-    -- vim.cmd.colorscheme 'atlantic-dark'
-  },
-  { 'neanias/everforest-nvim' },
   { 'rebelot/kanagawa.nvim' },
-  { 'i3d/vim-jimbothemes' },
-  { 'rodnaph/vim-color-schemes' },
   { 'realbucksavage/riderdark.vim' },
   { 'rose-pine/neovim' },
   { 'marko-cerovac/material.nvim' },
   { 'Mofiqul/vscode.nvim' },
   {
-    'rainglow/vim',
+    'catppuccin/nvim',
     priority = 1000, -- Make sure to load this before all the other start plugins.
     init = function()
       -- Load the colorscheme here.
-      vim.cmd.colorscheme 'jewel'
+      vim.cmd.colorscheme 'catppuccin'
 
       -- You can configure highlights by doing something like:
       vim.cmd.hi 'Comment gui=none'
     end,
+  },
+  {
+    'rainglow/vim',
+    -- priority = 1000, -- Make sure to load this before all the other start plugins.
+    -- init = function()
+    --   -- Load the colorscheme here.
+    --   vim.cmd.colorscheme 'jewel'
+
+    --   -- You can configure highlights by doing something like:
+    --   vim.cmd.hi 'Comment gui=none'
+    -- end,
   },
   { -- You can easily change to a different colorscheme.
     -- Change the name of the colorscheme plugin below, and then
