@@ -16,6 +16,7 @@ return {
     },
     config = true,
   },
+  --[[
   {
     'lewis6991/gitsigns.nvim',
     config = function()
@@ -31,29 +32,37 @@ return {
         },
       }
 
-      vim.keymap.set('n', '<leader>ghs', gs.stage_hunk, { silent = true, desc = '[G]it [h]unk [s]tage' })
-      vim.keymap.set('n', '<leader>ghr', gs.reset_hunk, { silent = true, desc = '[G]it [h]unk [r]eset' })
-      vim.keymap.set('v', '<leader>ghs', function()
+      -- In this case, we create a function that lets us more easily define mappings specific
+      -- for Git related items. It sets the mode, buffer and description for us each time.
+      local map = function(keys, func, desc, mode)
+        mode = mode or 'n'
+        vim.keymap.set(mode, keys, func, { silent = true, desc = 'Git: ' .. desc })
+      end
+
+      map('<leader>ghs', gs.stage_hunk, '[H]unk [S]tage')
+      map('<leader>ghr', gs.reset_hunk, '[H]unk [R]eset')
+      map('<leader>ghs', function()
         gs.stage_hunk { vim.fn.line '.', vim.fn.line 'v' }
-      end, { silent = true, desc = '[G]it [h]unk [s]tage' })
-      vim.keymap.set('v', '<leader>ghr', function()
+      end, '[H]unk [S]tage', 'v')
+      map('<leader>ghr', function()
         gs.reset_hunk { vim.fn.line '.', vim.fn.line 'v' }
-      end, { silent = true, desc = '[G]it [h]unk [r]eset' })
-      vim.keymap.set('n', '<leader>gbs', gs.stage_buffer, { silent = true, desc = '[G]it [b]uffer [s]tage' })
-      vim.keymap.set('n', '<leader>ghu', gs.undo_stage_hunk, { silent = true, desc = '[G]it [h]unk [u]ndo stage' })
-      vim.keymap.set('n', '<leader>gbr', gs.reset_buffer, { silent = true, desc = '[G]it [b]uffer [r]eset' })
-      vim.keymap.set('n', '<leader>ghp', gs.preview_hunk, { silent = true, desc = '[G]it [h]unk [p]review' })
-      vim.keymap.set('n', '<leader>ghb', function()
+      end, '[H]unk [R]eset', 'v')
+      map('<leader>gbs', gs.stage_buffer, '[B]uffer [S]tage')
+      map('<leader>ghu', gs.undo_stage_hunk, '[H]unk [U]ndo stage')
+      map('<leader>gbr', gs.reset_buffer, '[B]uffer [R]eset')
+      map('<leader>ghp', gs.preview_hunk, '[H]unk [P]review')
+      map('<leader>ghb', function()
         gs.blame_line { full = true }
-      end, { silent = true, desc = '[G]it [h]unk [b]lame' })
-      vim.keymap.set('n', '<leader>gtb', gs.toggle_current_line_blame, { silent = true, desc = '[G]it [t]oggle [b]lame' })
-      vim.keymap.set('n', '<leader>ghd', gs.diffthis, { silent = true, desc = '[G]it [h]unk [d]iff' })
-      vim.keymap.set('n', '<leader>ghD', function()
+      end, '[H]unk [B]lame')
+      map('<leader>gtb', gs.toggle_current_line_blame, '[T]oggle [B]lame')
+      map('<leader>ghd', gs.diffthis, '[H]unk [D]iff')
+      map('<leader>ghD', function()
         gs.diffthis '~'
-      end, { silent = true, desc = '[G]it [h]unk [D]iff' })
-      vim.keymap.set('n', '<leader>gtd', gs.toggle_deleted, { silent = true, desc = '[G]it [t]oggle [d]eleted' })
+      end, '[H]unk [D]iff')
+      map('<leader>gtd', gs.toggle_deleted, '[T]oggle [D]eleted')
     end,
   },
+  ]]
   --[[
   {
     'EmilOhlsson/FloatTerm.nvim',
@@ -92,146 +101,4 @@ return {
     end,
   },
 ]]
-  {
-    'Civitasv/cmake-tools.nvim',
-    config = function()
-      local osys = require 'cmake-tools.osys'
-      require('cmake-tools').setup {
-        cmake_command = 'cmake', -- this is used to specify cmake command path
-        ctest_command = 'ctest', -- this is used to specify ctest command path
-        cmake_use_preset = true,
-        cmake_regenerate_on_save = true, -- auto generate when save CMakeLists.txt
-        cmake_generate_options = { '-DCMAKE_EXPORT_COMPILE_COMMANDS=1' }, -- this will be passed when invoke `CMakeGenerate`
-        cmake_build_options = {}, -- this will be passed when invoke `CMakeBuild`
-        -- support macro expansion:
-        --       ${kit}
-        --       ${kitGenerator}
-        --       ${variant:xx}
-        cmake_build_directory = function()
-          if osys.iswin32 then
-            return 'build\\${variant:buildType}'
-          end
-          return 'build/${variant:buildType}'
-        end, -- this is used to specify generate directory for cmake, allows macro expansion, can be a string or a function returning the string, relative to cwd.
-        cmake_soft_link_compile_commands = true, -- this will automatically make a soft link from compile commands file to project root dir
-        cmake_compile_commands_from_lsp = false, -- this will automatically set compile commands file location using lsp, to use it, please set `cmake_soft_link_compile_commands` to false
-        cmake_kits_path = nil, -- this is used to specify global cmake kits path, see CMakeKits for detailed usage
-        cmake_variants_message = {
-          short = { show = true }, -- whether to show short message
-          long = { show = true, max_length = 40 }, -- whether to show long message
-        },
-        cmake_dap_configuration = { -- debug settings for cmake
-          name = 'cpp',
-          type = 'codelldb',
-          request = 'launch',
-          stopOnEntry = false,
-          runInTerminal = true,
-          console = 'integratedTerminal',
-        },
-        cmake_executor = { -- executor to use
-          name = 'quickfix', -- name of the executor
-          opts = {}, -- the options the executor will get, possible values depend on the executor type. See `default_opts` for possible values.
-          default_opts = { -- a list of default and possible values for executors
-            quickfix = {
-              show = 'always', -- "always", "only_on_error"
-              position = 'belowright', -- "vertical", "horizontal", "leftabove", "aboveleft", "rightbelow", "belowright", "topleft", "botright", use `:h vertical` for example to see help on them
-              size = 10,
-              encoding = 'utf-8', -- if encoding is not "utf-8", it will be converted to "utf-8" using `vim.fn.iconv`
-              auto_close_when_success = true, -- typically, you can use it with the "always" option; it will auto-close the quickfix buffer if the execution is successful.
-            },
-            toggleterm = {
-              direction = 'float', -- 'vertical' | 'horizontal' | 'tab' | 'float'
-              close_on_exit = false, -- whether close the terminal when exit
-              auto_scroll = true, -- whether auto scroll to the bottom
-              singleton = true, -- single instance, autocloses the opened one, if present
-            },
-            overseer = {
-              new_task_opts = {
-                strategy = {
-                  'toggleterm',
-                  direction = 'horizontal',
-                  autos_croll = true,
-                  quit_on_exit = 'success',
-                },
-              }, -- options to pass into the `overseer.new_task` command
-              on_new_task = function(task)
-                require('overseer').open { enter = false, direction = 'right' }
-              end, -- a function that gets overseer.Task when it is created, before calling `task:start`
-            },
-            terminal = {
-              name = 'Main Terminal',
-              prefix_name = '[CMakeTools]: ', -- This must be included and must be unique, otherwise the terminals will not work. Do not use a simple spacebar " ", or any generic name
-              split_direction = 'horizontal', -- "horizontal", "vertical"
-              split_size = 11,
-
-              -- Window handling
-              single_terminal_per_instance = true, -- Single viewport, multiple windows
-              single_terminal_per_tab = true, -- Single viewport per tab
-              keep_terminal_static_location = true, -- Static location of the viewport if avialable
-              auto_resize = true, -- Resize the terminal if it already exists
-
-              -- Running Tasks
-              start_insert = false, -- If you want to enter terminal with :startinsert upon using :CMakeRun
-              focus = false, -- Focus on terminal when cmake task is launched.
-              do_not_add_newline = false, -- Do not hit enter on the command inserted when using :CMakeRun, allowing a chance to review or modify the command before hitting enter.
-            }, -- terminal executor uses the values in cmake_terminal
-          },
-        },
-        cmake_runner = { -- runner to use
-          name = 'terminal', -- name of the runner
-          opts = {}, -- the options the runner will get, possible values depend on the runner type. See `default_opts` for possible values.
-          default_opts = { -- a list of default and possible values for runners
-            quickfix = {
-              show = 'always', -- "always", "only_on_error"
-              position = 'belowright', -- "bottom", "top"
-              size = 10,
-              encoding = 'utf-8',
-              auto_close_when_success = true, -- typically, you can use it with the "always" option; it will auto-close the quickfix buffer if the execution is successful.
-            },
-            toggleterm = {
-              direction = 'float', -- 'vertical' | 'horizontal' | 'tab' | 'float'
-              close_on_exit = false, -- whether close the terminal when exit
-              auto_scroll = true, -- whether auto scroll to the bottom
-              singleton = true, -- single instance, autocloses the opened one, if present
-            },
-            overseer = {
-              new_task_opts = {
-                strategy = {
-                  'toggleterm',
-                  direction = 'horizontal',
-                  autos_croll = true,
-                  quit_on_exit = 'success',
-                },
-              }, -- options to pass into the `overseer.new_task` command
-              on_new_task = function(task) end, -- a function that gets overseer.Task when it is created, before calling `task:start`
-            },
-            terminal = {
-              name = 'Main Terminal',
-              prefix_name = '[CMakeTools]: ', -- This must be included and must be unique, otherwise the terminals will not work. Do not use a simple spacebar " ", or any generic name
-              split_direction = 'horizontal', -- "horizontal", "vertical"
-              split_size = 11,
-
-              -- Window handling
-              single_terminal_per_instance = true, -- Single viewport, multiple windows
-              single_terminal_per_tab = true, -- Single viewport per tab
-              keep_terminal_static_location = true, -- Static location of the viewport if avialable
-              auto_resize = true, -- Resize the terminal if it already exists
-
-              -- Running Tasks
-              start_insert = false, -- If you want to enter terminal with :startinsert upon using :CMakeRun
-              focus = false, -- Focus on terminal when cmake task is launched.
-              do_not_add_newline = false, -- Do not hit enter on the command inserted when using :CMakeRun, allowing a chance to review or modify the command before hitting enter.
-            },
-          },
-        },
-        cmake_notifications = {
-          runner = { enabled = true },
-          executor = { enabled = true },
-          spinner = { '⠋', '⠙', '⠹', '⠸', '⠼', '⠴', '⠦', '⠧', '⠇', '⠏' }, -- icons used for progress display
-          refresh_rate_ms = 100, -- how often to iterate icons
-        },
-        cmake_virtual_text_support = true, -- Show the target related to current file using virtual text (at right corner)
-      }
-    end,
-  },
 }
