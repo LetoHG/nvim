@@ -44,7 +44,7 @@ local filtered_live_grep = function(opts)
   pickers
     .new(opts, {
       debounce = 100,
-      prompt_title = 'Filterel Live Grep',
+      prompt_title = 'Filtered Grep',
       finder = finder,
       previewer = conf.grep_previewer(opts),
       sorter = require('telescope.sorters').empty(),
