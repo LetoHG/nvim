@@ -34,6 +34,13 @@ return {
       desc = 'Debug: Start/Continue',
     },
     {
+      '<leader>ds',
+      function()
+        require('dap').continue()
+      end,
+      desc = 'Debug: [S]tart/Continue',
+    },
+    {
       '<F1>',
       function()
         require('dap').step_into()
@@ -55,14 +62,14 @@ return {
       desc = 'Debug: Step Out',
     },
     {
-      '<leader>b',
+      '<leader>db',
       function()
         require('dap').toggle_breakpoint()
       end,
       desc = 'Debug: Toggle Breakpoint',
     },
     {
-      '<leader>B',
+      '<leader>dB',
       function()
         require('dap').set_breakpoint(vim.fn.input 'Breakpoint condition: ')
       end,
@@ -75,6 +82,13 @@ return {
         require('dapui').toggle()
       end,
       desc = 'Debug: See last session result.',
+    },
+    {
+      '<leader>dl',
+      function()
+        require('dapui').toggle()
+      end,
+      desc = 'Debug: See [l]ast session result.',
     },
   },
   config = function()
@@ -108,15 +122,15 @@ return {
       icons = { expanded = '▾', collapsed = '▸', current_frame = '*' },
       controls = {
         icons = {
-          pause = '⏸',
-          play = '▶',
-          step_into = '⏎',
-          step_over = '⏭',
-          step_out = '⏮',
-          step_back = 'b',
-          run_last = '▶▶',
-          terminate = '⏹',
-          disconnect = '⏏',
+          pause = '',
+          play = '',
+          step_into = '󰆹',
+          step_over = '',
+          step_out = '󰆸',
+          step_back = '',
+          run_last = '',
+          terminate = '',
+          disconnect = '',
         },
       },
     }
