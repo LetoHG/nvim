@@ -22,6 +22,16 @@ return {
       on_attach = function(bufnr)
         local gitsigns = require 'gitsigns'
 
+        gitsigns.setup {
+          signs = {
+            add = { text = '+' },
+            change = { text = '~' },
+            delete = { text = '_' },
+            topdelete = { text = '‾' },
+            changedelete = { text = '~' },
+          },
+        }
+
         local function map(mode, l, r, opts)
           opts = opts or {}
           opts.buffer = bufnr
@@ -49,10 +59,10 @@ return {
         -- visual mode
         map('v', '<leader>ghs', function()
           gitsigns.stage_hunk { vim.fn.line '.', vim.fn.line 'v' }
-        end, { desc = 'stage git hunk' })
+        end, { desc = 'Git: [H]unk [S]tage' })
         map('v', '<leader>ghr', function()
           gitsigns.reset_hunk { vim.fn.line '.', vim.fn.line 'v' }
-        end, { desc = 'reset git hunk' })
+        end, { desc = 'Git: [H]unk [R]eset' })
         -- normal mode
         map('n', '<leader>ghs', gitsigns.stage_hunk, { desc = 'Git: [s]tage hunk' })
         map('n', '<leader>ghr', gitsigns.reset_hunk, { desc = 'Git: [r]eset hunk' })

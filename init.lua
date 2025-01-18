@@ -204,6 +204,14 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   end,
 })
 
+-- Use // to comment in c/cpp files instead of the default /* */
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = { 'c', 'cpp' },
+  callback = function()
+    vim.bo.commentstring = '// %s'
+  end,
+})
+
 -- [[ Install `lazy.nvim` plugin manager ]]
 --    See `:help lazy.nvim.txt` or https://github.com/folke/lazy.nvim for more info
 local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
@@ -924,6 +932,10 @@ require('lazy').setup({
 
       -- ... and there is more!
       --  Check out: https://github.com/echasnovski/mini.nvim
+
+      -- Easy navigation with [ and ] prefix (e.g ]b)
+      require('mini.bracketed').setup()
+      require('mini.comment').setup()
     end,
   },
   { -- Highlight, edit, and navigate code
@@ -962,7 +974,7 @@ require('lazy').setup({
   --  Uncomment any of the lines below to enable them (you will need to restart nvim).
   --
   require 'kickstart.plugins.debug',
-  require 'kickstart.plugins.indent_line',
+  -- require 'kickstart.plugins.indent_line',
   -- require 'kickstart.plugins.lint',
   require 'kickstart.plugins.autopairs',
   require 'kickstart.plugins.neo-tree',
