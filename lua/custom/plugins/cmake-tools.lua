@@ -74,7 +74,7 @@ return {
               name = 'Main Terminal',
               prefix_name = '[CMakeTools]: ', -- This must be included and must be unique, otherwise the terminals will not work. Do not use a simple spacebar " ", or any generic name
               split_direction = 'vertical', -- "horizontal", "vertical"
-              split_size = 25,
+              split_size = 125,
 
               -- Window handling
               single_terminal_per_instance = true, -- Single viewport, multiple windows
@@ -121,7 +121,7 @@ return {
               name = 'Main Terminal',
               prefix_name = '[CMakeTools]: ', -- This must be included and must be unique, otherwise the terminals will not work. Do not use a simple spacebar " ", or any generic name
               split_direction = 'vertical', -- "horizontal", "vertical"
-              split_size = 25,
+              split_size = 125,
 
               -- Window handling
               single_terminal_per_instance = true, -- Single viewport, multiple windows
@@ -144,6 +144,9 @@ return {
         },
         cmake_virtual_text_support = true, -- Show the target related to current file using virtual text (at right corner)
       }
+      vim.keymap.set('n', '<leader>cb', ':CMakeBuild<CR>', { silent = true })
+      vim.keymap.set('n', '<leader>ct', ':CMakeSelectBuildTarget<CR>', { silent = true })
+      vim.keymap.set('n', '<leader>cc', ':CMakeGenerate<CR>', { silent = true })
     end,
   },
 }

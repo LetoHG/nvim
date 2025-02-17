@@ -190,6 +190,10 @@ vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right win
 vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
 vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
 
+vim.keymap.set('n', '<A-h>', '<C-w><C-<>', { desc = 'Move focus to the left window' })
+vim.keymap.set('n', '<A-l>', '<C-w><C->>', { desc = 'Move focus to the right window' })
+vim.keymap.set('n', '<A-j>', '<C-w><C-->', { desc = 'Move focus to the lower window' })
+vim.keymap.set('n', '<A-k>', '<C-w><C-+>', { desc = 'Move focus to the upper window' })
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
 
@@ -209,6 +213,39 @@ vim.api.nvim_create_autocmd('FileType', {
   pattern = { 'c', 'cpp' },
   callback = function()
     vim.bo.commentstring = '// %s'
+  end,
+})
+
+-- TODO: does not work yet!
+-- Have cmake binding only in cmake projects, extend for cargo and other build systems
+-- vim.api.nvim_create_autocmd('LspAttach', {
+--   -- group = 'LspAttach',
+--   callback = function(ev)
+--     local bufnr = ev.buf
+--     local client = vim.lsp.get_client_by_id(ev.data.client_id)
+--
+--     if client.name == 'clangd' then
+--       vim.keymap.set('n', '<leader>cb', ':CMakeBuild<CR>', { silent = true, buffer = bufnr })
+--       vim.keymap.set('n', '<leader>ct', ':CMakeSelectBuildTarget<CR>', { silent = true, buffer = bufnr })
+--       vim.keymap.set('n', '<leader>cc', ':CMakeGenerate<CR>', { silent = true, buffer = bufnr })
+--     end
+--   end,
+-- })
+
+-- Function to emit a notification when recording starts
+local function on_macro_recording()
+  local register = vim.fn.reg_recording()
+  vim.notify('Macro recording started on register: ' .. register, vim.log.levels.INFO)
+end
+
+-- Set up autocommands to detect when recording starts and ends
+vim.api.nvim_create_autocmd('RecordingEnter', {
+  callback = on_macro_recording, -- Show notification when recording starts
+})
+
+vim.api.nvim_create_autocmd('RecordingLeave', {
+  callback = function()
+    vim.notify('Macro recording stopped!', vim.log.levels.INFO)
   end,
 })
 
@@ -400,7 +437,11 @@ require('lazy').setup({
         --     i = { ['<c-enter>'] = 'to_fuzzy_refine' },
         --   },
         -- },
-        -- pickers = {}
+        pickers = {
+          live_grep = {
+            theme = 'ivy',
+          },
+        },
         extensions = {
           ['ui-select'] = {
             require('telescope.themes').get_dropdown(),
@@ -631,6 +672,8 @@ require('lazy').setup({
       --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
       local servers = {
         clangd = {},
+        cmake = {},
+        bashls = {},
         -- gopls = {},
         -- pyright = {},
         rust_analyzer = {},
@@ -962,6 +1005,17 @@ require('lazy').setup({
     --    - Incremental selection: Included, see `:help nvim-treesitter-incremental-selection-mod`
     --    - Show your current context: https://github.com/nvim-treesitter/nvim-treesitter-context
     --    - Treesitter + textobjects: https://github.com/nvim-treesitter/nvim-treesitter-textobjects
+    config = function()
+      require('nvim-treesitter.configs').setup {
+        ensure_installed = { 'cpp' }, -- Add other languages as needed
+        highlight = { enable = true },
+        indent = { enable = true },
+        fold = { enable = true },
+      }
+      vim.opt.foldmethod = 'expr'
+      vim.opt.foldexpr = 'nvim_treesitter#foldexpr()'
+      vim.opt.foldenable = false
+    end,
   },
 
   -- The following comments only work if you have downloaded the kickstart repo, not just copy pasted the
