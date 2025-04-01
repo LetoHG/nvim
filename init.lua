@@ -136,7 +136,7 @@ vim.opt.updatetime = 250
 
 -- Decrease mapped sequence wait time
 -- Displays which-key popup sooner
-vim.opt.timeoutlen = 300
+vim.opt.timeoutlen = 100
 
 -- Configure how new splits should be opened
 vim.opt.splitright = true
@@ -156,6 +156,16 @@ vim.opt.cursorline = true
 
 -- Minimal number of screen lines to keep above and below the cursor.
 vim.opt.scrolloff = 10
+
+-- Activate spell checking for the english language
+vim.opt.spell = true
+vim.opt.spelllang = 'en_us' -- Change to your preferred language
+
+-- Use spaces instead of tabs for indentation
+vim.opt.expandtab = true -- Use spaces instead of tabs
+vim.opt.shiftwidth = 4 -- Indentation width is 4 spaces
+vim.opt.tabstop = 4 -- A tab character appears as 4 spaces
+vim.opt.softtabstop = 4 -- Number of spaces when pressing <Tab>
 
 -- [[ Basic Keymaps ]]
 --  See `:help vim.keymap.set()`
@@ -320,6 +330,7 @@ require('lazy').setup({
     'folke/which-key.nvim',
     event = 'VimEnter', -- Sets the loading event to 'VimEnter'
     opts = {
+      preset = 'helix',
       icons = {
         -- set icon mappings to true if you have a Nerd Font
         mappings = vim.g.have_nerd_font,

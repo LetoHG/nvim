@@ -159,5 +159,25 @@ return {
         detached = vim.fn.has 'win32' == 0,
       },
     }
+
+    dap.configurations.cpp = {
+      {
+        name = 'Launch with args',
+        type = 'codelldb', -- Change this based on your debugger (e.g., gdb, codelldb)
+        request = 'launch',
+        program = function()
+          return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
+        end,
+        args = function()
+          local input = vim.fn.input 'Arguments: '
+          return vim.split(input, ' ') -- Splits by spaces into a table
+        end,
+        cwd = '${workspaceFolder}',
+        stopOnEntry = false,
+        runInTerminal = false,
+      },
+    }
+
+    dap.configurations.c = dap.configurations.cpp
   end,
 }
