@@ -136,7 +136,7 @@ vim.opt.updatetime = 250
 
 -- Decrease mapped sequence wait time
 -- Displays which-key popup sooner
-vim.opt.timeoutlen = 100
+vim.opt.timeoutlen = 300
 
 -- Configure how new splits should be opened
 vim.opt.splitright = true
@@ -166,6 +166,10 @@ vim.opt.expandtab = true -- Use spaces instead of tabs
 vim.opt.shiftwidth = 4 -- Indentation width is 4 spaces
 vim.opt.tabstop = 4 -- A tab character appears as 4 spaces
 vim.opt.softtabstop = 4 -- Number of spaces when pressing <Tab>
+
+require 'custom.config.makros'
+
+vim.keymap.set('n', '-', '<CMD>Oil<CR>', { desc = 'Open parent directory' })
 
 -- [[ Basic Keymaps ]]
 --  See `:help vim.keymap.set()`
@@ -996,6 +1000,9 @@ require('lazy').setup({
       -- Easy navigation with [ and ] prefix (e.g ]b)
       require('mini.bracketed').setup()
       require('mini.comment').setup()
+
+      -- require('mini.files').setup()
+      -- vim.keymap.set('n', '-', ':lua MiniFiles.open()<CR>', { silent = true })
     end,
   },
   { -- Highlight, edit, and navigate code
