@@ -666,7 +666,18 @@ require('lazy').setup({
         for type, icon in pairs(signs) do
           diagnostic_signs[vim.diagnostic.severity[type]] = icon
         end
-        vim.diagnostic.config { signs = { text = diagnostic_signs } }
+        vim.diagnostic.config {
+          virtual_text = {
+            prefix = '●', -- Optional, choose a symbol like '●', '■', etc.
+            spacing = 2, -- Space between the symbol and the text
+            severity = nil, -- Show all severity levels (errors, warnings, etc.)
+            source = 'if_many', -- Show source name if multiple LSP servers are attached
+          },
+          underline = true, -- Keep underline for problematic code
+          signs = { text = diagnostic_signs }, -- Show signs in the gutter (default)
+          update_in_insert = false, -- Avoid updating diagnostics while typing
+          severity_sort = true, -- Sort diagnostics by severity (errors first)
+        }
       end
 
       -- LSP servers and clients are able to communicate to each other what features they support.
