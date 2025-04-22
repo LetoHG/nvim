@@ -169,8 +169,6 @@ vim.opt.softtabstop = 4 -- Number of spaces when pressing <Tab>
 
 require 'custom.config.makros'
 
-vim.keymap.set('n', '-', '<CMD>Oil<CR>', { desc = 'Open parent directory' })
-
 -- [[ Basic Keymaps ]]
 --  See `:help vim.keymap.set()`
 
@@ -1010,10 +1008,6 @@ require('lazy').setup({
 
       -- Easy navigation with [ and ] prefix (e.g ]b)
       require('mini.bracketed').setup()
-      require('mini.comment').setup()
-
-      -- require('mini.files').setup()
-      -- vim.keymap.set('n', '-', ':lua MiniFiles.open()<CR>', { silent = true })
     end,
   },
   { -- Highlight, edit, and navigate code

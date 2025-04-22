@@ -24,9 +24,9 @@ local function insert_note(category)
   vim.api.nvim_set_current_line(new_line)
 end
 
-vim.keymap.set('n', '<leader>nf', function()
+vim.keymap.set('n', '<leader>nt', function()
   insert_note 'TODO'
 end, { desc = 'Insert todo comment', noremap = true, silent = true }) -- Fix keymap
-vim.keymap.set('n', '<leader>nt', function()
+vim.keymap.set('n', '<leader>nf', function()
   insert_note 'FIXME'
 end, { desc = 'Insert fixme comment', noremap = true, silent = true }) -- Fix keymap
