@@ -45,6 +45,18 @@ return {
         },
         lualine_b = {
           {
+            'macro',
+            fmt = function()
+              local reg = vim.fn.reg_recording()
+              if reg ~= '' then
+                return 'Rec @' .. reg
+              end
+              return nil
+            end,
+            color = { fg = '#ff9e64' },
+            draw_empty = false,
+          },
+          {
             'filetype',
             icon_only = true,
             padding = { left = 1, right = 0 },
@@ -63,6 +75,12 @@ return {
           },
         },
         lualine_x = {
+          {
+            'command', -- <--- This is the one you want!
+            cond = function()
+              return vim.fn.mode() ~= 'i'
+            end,
+          },
           {
             'diagnostics',
             symbols = { error = ' ', warn = ' ', info = ' ', hint = ' ' },

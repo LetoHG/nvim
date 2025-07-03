@@ -245,21 +245,21 @@ vim.api.nvim_create_autocmd('FileType', {
 -- })
 
 -- Function to emit a notification when recording starts
-local function on_macro_recording()
-  local register = vim.fn.reg_recording()
-  vim.notify('Macro recording started on register: ' .. register, vim.log.levels.INFO)
-end
-
--- Set up autocommands to detect when recording starts and ends
-vim.api.nvim_create_autocmd('RecordingEnter', {
-  callback = on_macro_recording, -- Show notification when recording starts
-})
-
-vim.api.nvim_create_autocmd('RecordingLeave', {
-  callback = function()
-    vim.notify('Macro recording stopped!', vim.log.levels.INFO)
-  end,
-})
+-- local function on_macro_recording()
+--   local register = vim.fn.reg_recording()
+--   vim.notify('Macro recording started on register: ' .. register, vim.log.levels.INFO)
+-- end
+--
+-- -- Set up autocommands to detect when recording starts and ends
+-- vim.api.nvim_create_autocmd('RecordingEnter', {
+--   callback = on_macro_recording, -- Show notification when recording starts
+-- })
+--
+-- vim.api.nvim_create_autocmd('RecordingLeave', {
+--   callback = function()
+--     vim.notify('Macro recording stopped!', vim.log.levels.INFO)
+--   end,
+-- })
 
 -- [[ Install `lazy.nvim` plugin manager ]]
 --    See `:help lazy.nvim.txt` or https://github.com/folke/lazy.nvim for more info
