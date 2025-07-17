@@ -924,7 +924,16 @@ require('lazy').setup({
   {
     'catppuccin/nvim',
     priority = 1000, -- Make sure to load this before all the other start plugins.
-    init = function()
+    config = function()
+      require('catppuccin').setup {
+        transparent_background = true,
+        custom_highlights = function(colors)
+          return {
+            LineNr = { fg = colors.peach, bg = 'NONE' }, -- example with peach color
+          }
+        end,
+      }
+      -- init = function()
       -- Load the colorscheme here.
       vim.cmd.colorscheme 'catppuccin'
 
