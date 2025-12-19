@@ -163,9 +163,9 @@ vim.opt.spelllang = 'en_us' -- Change to your preferred language
 
 -- Use spaces instead of tabs for indentation
 vim.opt.expandtab = true -- Use spaces instead of tabs
-vim.opt.shiftwidth = 4 -- Indentation width is 4 spaces
-vim.opt.tabstop = 4 -- A tab character appears as 4 spaces
-vim.opt.softtabstop = 4 -- Number of spaces when pressing <Tab>
+vim.opt.shiftwidth = 4   -- Indentation width is 4 spaces
+vim.opt.tabstop = 4      -- A tab character appears as 4 spaces
+vim.opt.softtabstop = 4  -- Number of spaces when pressing <Tab>
 
 require 'custom.config.makros'
 
@@ -328,7 +328,7 @@ require('lazy').setup({
   -- after the plugin has been loaded:
   --  config = function() ... end
 
-  { -- Useful plugin to show you pending keybinds.
+  {                     -- Useful plugin to show you pending keybinds.
     'folke/which-key.nvim',
     event = 'VimEnter', -- Sets the loading event to 'VimEnter'
     opts = {
@@ -373,16 +373,16 @@ require('lazy').setup({
       -- Document existing key chains
       spec = {
         -- { '<leader>c', group = '[C]ode', mode = { 'n', 'x' } },
-        { '<leader>l', group = '[L]SP' },
-        { '<leader>r', group = '[R]ename' },
-        { '<leader>s', group = '[S]earch' },
+        { '<leader>l',  group = '[L]SP' },
+        { '<leader>r',  group = '[R]ename' },
+        { '<leader>s',  group = '[S]earch' },
         -- { '<leader>w', group = '[W]orkspace' },
-        { '<leader>c', group = '[C]Make' },
-        { '<leader>d', group = '[D]ebug' },
-        { '<leader>t', group = '[T]est' },
-        { '<leader>g', group = '[G]it', mode = { 'n', 'v' } },
-        { '<leader>gb', group = 'Git: [B]lame', mode = { 'n', 'v' } },
-        { '<leader>gh', group = 'Git: [H]unk', mode = { 'n', 'v' } },
+        { '<leader>c',  group = '[C]Make' },
+        { '<leader>d',  group = '[D]ebug' },
+        { '<leader>t',  group = '[T]est' },
+        { '<leader>g',  group = '[G]it',         mode = { 'n', 'v' } },
+        { '<leader>gb', group = 'Git: [B]lame',  mode = { 'n', 'v' } },
+        { '<leader>gh', group = 'Git: [H]unk',   mode = { 'n', 'v' } },
         { '<leader>gt', group = 'Git: [T]oggle', mode = { 'n', 'v' } },
       },
     },
@@ -417,7 +417,7 @@ require('lazy').setup({
       { 'nvim-telescope/telescope-ui-select.nvim' },
 
       -- Useful for getting pretty icons, but requires a Nerd Font.
-      { 'nvim-tree/nvim-web-devicons', enabled = vim.g.have_nerd_font },
+      { 'nvim-tree/nvim-web-devicons',            enabled = vim.g.have_nerd_font },
     },
     config = function()
       -- Telescope is a fuzzy finder that comes with a lot of different things that
@@ -519,7 +519,7 @@ require('lazy').setup({
       },
     },
   },
-  { 'Bilal2453/luvit-meta', lazy = true },
+  { 'Bilal2453/luvit-meta',        lazy = true },
   {
     -- Main LSP Configuration
     'neovim/nvim-lspconfig',
@@ -531,7 +531,7 @@ require('lazy').setup({
 
       -- Useful status updates for LSP.
       -- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
-      { 'j-hui/fidget.nvim', opts = {} },
+      { 'j-hui/fidget.nvim',       opts = {} },
 
       -- Allows extra capabilities provided by nvim-cmp
       'hrsh7th/cmp-nvim-lsp',
@@ -1025,7 +1025,10 @@ require('lazy').setup({
     main = 'nvim-treesitter.configs', -- Sets main module to use for opts
     -- [[ Configure Treesitter ]] See `:help nvim-treesitter`
     opts = {
-      ensure_installed = { 'bash', 'c', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'markdown_inline', 'query', 'vim', 'vimdoc' },
+      ensure_installed = {
+        'bash', 'c', 'cpp', 'diff', 'html', 'lua', 'luadoc', 'markdown',
+        'markdown_inline', 'rust', 'query', 'vim', 'vimdoc', 'zig',
+      },
       -- Autoinstall languages that are not installed
       auto_install = true,
       highlight = {
@@ -1036,6 +1039,7 @@ require('lazy').setup({
         additional_vim_regex_highlighting = { 'ruby' },
       },
       indent = { enable = true, disable = { 'ruby' } },
+      fold = { enable = true },
     },
     -- There are additional nvim-treesitter modules that you can use to interact
     -- with nvim-treesitter. You should go explore a few and see what interests you:
@@ -1044,12 +1048,6 @@ require('lazy').setup({
     --    - Show your current context: https://github.com/nvim-treesitter/nvim-treesitter-context
     --    - Treesitter + textobjects: https://github.com/nvim-treesitter/nvim-treesitter-textobjects
     config = function()
-      require('nvim-treesitter.configs').setup {
-        ensure_installed = { 'cpp' }, -- Add other languages as needed
-        highlight = { enable = true },
-        indent = { enable = true },
-        fold = { enable = true },
-      }
       vim.opt.foldmethod = 'expr'
       vim.opt.foldexpr = 'nvim_treesitter#foldexpr()'
       vim.opt.foldenable = false

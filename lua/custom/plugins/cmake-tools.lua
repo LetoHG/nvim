@@ -145,8 +145,25 @@ return {
         cmake_virtual_text_support = true, -- Show the target related to current file using virtual text (at right corner)
       }
       vim.keymap.set('n', '<leader>cb', ':CMakeBuild<CR>', { silent = true })
+      vim.keymap.set('n', '<leader>cr', ':CMakeRun<CR>', { silent = true })
       vim.keymap.set('n', '<leader>ct', ':CMakeSelectBuildTarget<CR>', { silent = true })
-      vim.keymap.set('n', '<leader>cc', ':CMakeGenerate<CR>', { silent = true })
+      vim.keymap.set('n', '<leader>ck', ':CMakeSelectKit<CR>', { silent = true })
+      vim.keymap.set('n', '<leader>cm', ':CMakeSelectBuildType<CR>', { silent = true })
+      vim.keymap.set('n', '<leader>cg', ':CMakeGenerate<CR>', { silent = true })
+
+      vim.keymap.set('n', '<leader>cla', ':CMakeLaunchArgs ', { silent = true })
+      vim.keymap.set('n', '<leader>clt', ':CMakeSelectLaunchTarget<CR>', { silent = true })
+      vim.keymap.set('n', '<leader>cqb', ':CMakeQuickBuild<CR>', { silent = true })
+      vim.keymap.set('n', '<leader>cqr', ':CMakeQuickRun<CR>', { silent = true })
+
+      vim.keymap.set('n', '<leader>cfb', ':CMakeBuildCurrentFile<CR>', { silent = true })
+      vim.keymap.set('n', '<leader>cfr', ':CMakeRunCurrentFile<CR>', { silent = true })
+      vim.keymap.set('n', '<leader>cfd', ':CMakeDebugCurrentFile<CR>', { silent = true })
+
+      vim.keymap.set('n', '<leader>coe', ':CMakeOpenExecutor<CR>', { silent = true })
+      vim.keymap.set('n', '<leader>cor', ':CMakeOpenRunner<CR>', { silent = true })
+      vim.keymap.set('n', '<leader>cce', ':CMakeCloseExecutor<CR>', { silent = true })
+      vim.keymap.set('n', '<leader>ccr', ':CMakeCloseRunner<CR>', { silent = true })
     end,
   },
 }
