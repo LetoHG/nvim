@@ -47,7 +47,7 @@ return {
             quickfix = {
               show = 'always', -- "always", "only_on_error"
               position = 'vertical', -- "vertical", "horizontal", "leftabove", "aboveleft", "rightbelow", "belowright", "topleft", "botright", use `:h vertical` for example to see help on them
-              size = 125,
+              size = 110,
               encoding = 'utf-8', -- if encoding is not "utf-8", it will be converted to "utf-8" using `vim.fn.iconv`
               auto_close_when_success = true, -- typically, you can use it with the "always" option; it will auto-close the quickfix buffer if the execution is successful.
             },
@@ -74,7 +74,7 @@ return {
               name = 'Main Terminal',
               prefix_name = '[CMakeTools]: ', -- This must be included and must be unique, otherwise the terminals will not work. Do not use a simple spacebar " ", or any generic name
               split_direction = 'vertical', -- "horizontal", "vertical"
-              split_size = 125,
+              split_size = 110,
 
               -- Window handling
               single_terminal_per_instance = true, -- Single viewport, multiple windows
@@ -137,11 +137,46 @@ return {
           },
         },
         cmake_notifications = {
-          runner = { enabled = false },
-          executor = { enabled = false },
+          runner = {
+            enabled = false, -- Keep progress notifications
+            warnings = false, -- Disable if you only want progress
+            errors = true, -- Highly recommended to keep errors enabled
+          },
+          executor = {
+            enabled = false,
+            warnings = false,
+            errors = true,
+          },
           spinner = { '⠋', '⠙', '⠹', '⠸', '⠼', '⠴', '⠦', '⠧', '⠇', '⠏' }, -- icons used for progress display
           refresh_rate_ms = 100, -- how often to iterate icons
         },
+        on_build_output = function(lines)
+          local last_line = lines[#lines]
+          -- Extract progress percentage like [ 5%] or [100%]
+          local progress = string.match(last_line, '%[(%s*%d+)%%%]')
+
+          if progress then
+            local val = tonumber(progress)
+            local progress_handle = nil
+            if not progress_handle then
+              progress_handle = require('fidget.progress').handle.create {
+                title = 'CMake Build',
+                message = 'Starting...',
+                lsp_client = { name = 'CMake' },
+              }
+            end
+
+            progress_handle:report {
+              percentage = val,
+              message = string.format('Building... %d%%', val),
+            }
+
+            if val >= 100 then
+              progress_handle:finish()
+              progress_handle = nil
+            end
+          end
+        end,
         cmake_virtual_text_support = true, -- Show the target related to current file using virtual text (at right corner)
       }
       vim.keymap.set('n', '<leader>cb', ':CMakeBuild<CR>', { silent = true })

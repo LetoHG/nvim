@@ -1,0 +1,75 @@
+return {
+  -- -- Inline completions / suggestions
+  -- {
+  --   'zbirenbaum/copilot.lua',
+  --   event = 'InsertEnter',
+  --   dependencies = {
+  --     'nvim-lua/plenary.nvim',
+  --   },
+  --   opts = {
+  --     suggestion = {
+  --       enabled = true,
+  --       auto_trigger = true,
+  --       -- configure accept key, etc.
+  --     },
+  --     panel = {
+  --       enabled = false, -- maybe disable panel if using chat window
+  --     },
+  --   },
+  --   config = function(_, opts)
+  --     require('copilot').setup(opts)
+  --   end,
+  -- },
+  -- -- in your lazy config
+  -- {
+  --   'CopilotC-Nvim/CopilotChat.nvim',
+  --   branch = 'main',
+  --   cmd = 'CopilotChat',
+  --   opts = {
+  --     auto_insert_mode = true,
+  --     question_header = ' ' .. (vim.env.USER or 'User') .. ' ',
+  --     answer_header = ' Copilot ',
+  --     window = {
+  --       width = 0.4,
+  --     },
+  --   },
+  --   keys = {
+  --     {
+  --       '<leader>aa',
+  --       function()
+  --         require('CopilotChat').toggle()
+  --       end,
+  --       desc = 'Toggle CopilotChat',
+  --     },
+  --     {
+  --       '<leader>ax',
+  --       function()
+  --         require('CopilotChat').reset()
+  --       end,
+  --       desc = 'Reset Chat',
+  --     },
+  --     {
+  --       '<leader>aq',
+  --       function()
+  --         vim.ui.input({ prompt = 'Quick Chat: ' }, function(input)
+  --           if input ~= '' then
+  --             require('CopilotChat').ask(input)
+  --           end
+  --         end)
+  --       end,
+  --       desc = 'Quick Chat',
+  --     },
+  --   },
+  --   config = function(_, opts)
+  --     local chat = require 'CopilotChat'
+  --     chat.setup(opts)
+  --     vim.api.nvim_create_autocmd('BufEnter', {
+  --       pattern = 'copilot-chat',
+  --       callback = function()
+  --         vim.opt_local.number = false
+  --         vim.opt_local.relativenumber = false
+  --       end,
+  --     })
+  --   end,
+  -- },
+}
