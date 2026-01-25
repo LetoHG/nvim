@@ -44,7 +44,7 @@ return {
       -- Document existing key chains
       spec = {
         -- { '<leader>c', group = '[C]ode', mode = { 'n', 'x' } },
-        { '<leader>l', group = '[L]SP' },
+        { '<leader>l', group = '[L]azygit' },
         { '<leader>r', group = '[R]ename' },
         { '<leader>s', group = '[S]earch' },
         { '<leader>w', group = '[W]orkspace' },
@@ -52,6 +52,8 @@ return {
         { '<leader>d', group = '[D]ebug' },
         { '<leader>t', group = '[T]est' },
         { '<leader>g', group = '[G]it', mode = { 'n', 'v' } },
+        { '<leader>gc', group = 'Git: [C]reate', mode = { 'n', 'v' } },
+        { '<leader>gs', group = 'Git: [S]witch', mode = { 'n', 'v' } },
         { '<leader>gb', group = 'Git: [B]lame', mode = { 'n', 'v' } },
         { '<leader>gh', group = 'Git: [H]unk', mode = { 'n', 'v' } },
         { '<leader>gt', group = 'Git: [T]oggle', mode = { 'n', 'v' } },

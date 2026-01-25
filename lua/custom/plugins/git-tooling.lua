@@ -19,18 +19,25 @@ return {
   {
     'lewis6991/gitsigns.nvim',
     opts = {
+      signs = {
+        add = { text = '┃' },
+        change = { text = '┃' },
+        delete = { text = '_' },
+        topdelete = { text = '‾' },
+        changedelete = { text = '~' },
+        untracked = { text = '┆' },
+      },
+      signs_staged = {
+        add = { text = '┃' },
+        change = { text = '┃' },
+        delete = { text = '_' },
+        topdelete = { text = '‾' },
+        changedelete = { text = '~' },
+        untracked = { text = '┆' },
+      },
+      signs_staged_enable = true,
       on_attach = function(bufnr)
         local gitsigns = require 'gitsigns'
-
-        gitsigns.setup {
-          signs = {
-            add = { text = '+' },
-            change = { text = '~' },
-            delete = { text = '_' },
-            topdelete = { text = '‾' },
-            changedelete = { text = '~' },
-          },
-        }
 
         local function map(mode, l, r, opts)
           opts = opts or {}
@@ -77,8 +84,26 @@ return {
         end, { desc = 'Git: [D]iff against last commit' })
         -- Toggles
         map('n', '<leader>gtb', gitsigns.toggle_current_line_blame, { desc = 'Git: [T]oggle git show [b]lame line' })
-        map('n', '<leader>gtD', gitsigns.toggle_deleted, { desc = 'Git: [T]oggle git show [D]eleted' })
+        map('n', '<leader>gtD', gitsigns.preview_hunk_inline, { desc = 'Git: [T]oggle git show [D]eleted' })
       end,
     },
+  },
+  {
+    'ThePrimeagen/git-worktree.nvim',
+    dependencies = {
+      'nvim-telescope/telescope.nvim',
+    },
+    config = function()
+      local git_wt = require 'git-worktree'
+      local telescope = require 'telescope'
+      telescope.load_extension 'git_worktree'
+
+      vim.keymap.set('n', '<leader>gsw', function()
+        telescope.extensions.git_worktree.git_worktrees()
+      end, { silent = true, desc = 'Git: [S]witch [W]orktree' })
+      vim.keymap.set('n', '<leader>gcw', function()
+        telescope.extensions.git_worktree.create_git_worktree()
+      end, { silent = true, desc = 'Git: [C]reate [W]orktree' })
+    end,
   },
 }

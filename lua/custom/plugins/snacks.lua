@@ -113,7 +113,7 @@ return {
       { '<leader>pws', function() require('snacks').picker.grep_word() end, desc = 'Search Visual selection or Word', mode = { 'n', 'x' }, },
       { '<leader>pk', function() require('snacks').picker.keymaps { layout = 'ivy' } end, desc = 'Search Keymaps (Snacks Picker)', },
       -- Git Stuff 
-      { '<leader>gbr', function() require('snacks').picker.git_branches { layout = 'select' } end, desc = 'Pick and Switch Git Branches', },
+      { '<leader>gsb', function() require('snacks').picker.git_branches { layout = 'select' } end, desc = 'Pick and Switch Git Branches', },
       -- Other Utils 
       { '<leader>pl', function() require('snacks').picker.colorschemes { layout = 'ivy' } end, desc = 'Pick Color Schemes', },
       {'<leader>vh', function() require('snacks').picker.help() end, desc = 'Help Pages',},
