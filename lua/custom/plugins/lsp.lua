@@ -203,7 +203,7 @@ return {
         clangd = {},
         cmake = {},
         bashls = {},
-        -- gopls = {},
+        gopls = {},
         -- pyright = {},
         rust_analyzer = {},
         zls = {},
