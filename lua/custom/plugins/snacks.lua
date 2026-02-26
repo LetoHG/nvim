@@ -10,6 +10,14 @@ return {
       -- refer to the configuration section below
       -- bigfile = { enabled = true },
       dashboard = { enabled = true },
+      dim = {
+        enabled = true,
+        scope = {
+          min_size = 5,
+          max_size = 20,
+          siblings = true,
+        },
+      },
       indent = { enabled = true },
       -- input = { enabled = true },
       -- notifier = { enabled = true },
@@ -214,6 +222,18 @@ return {
           require('snacks').picker.resume()
         end,
         desc = 'Resume last picker',
+      },
+      {
+        '<leader>i',
+        function()
+          local d = require('snacks').dim
+          if d.enabled then
+            d.disable()
+          else
+            d.enable()
+          end
+        end,
+        desc = 'Toggle dimming',
       },
     },
   },

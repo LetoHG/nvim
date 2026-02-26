@@ -11,6 +11,7 @@ return {
         'cpp',
         'diff',
         'html',
+        'go',
         'lua',
         'luadoc',
         'markdown',
@@ -39,7 +40,9 @@ return {
     --    - Incremental selection: Included, see `:help nvim-treesitter-incremental-selection-mod`
     --    - Show your current context: https://github.com/nvim-treesitter/nvim-treesitter-context
     --    - Treesitter + textobjects: https://github.com/nvim-treesitter/nvim-treesitter-textobjects
-    config = function()
+    config = function(_, opts)
+      require('nvim-treesitter.configs').setup(opts)
+
       -- A custom fold expression function
       -- It keeps include statements unfolded while using treesitter for everything else.
       function _G.custom_fold_expr()

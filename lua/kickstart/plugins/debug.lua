@@ -26,6 +26,37 @@ return {
   },
   keys = {
     -- Basic debugging keymaps, feel free to change to your liking!
+    -- Alternative für Stop (falls C-S-F5 vom Terminal abgefangen wird)
+    {
+      '<leader>dq',
+      function()
+        require('dap').terminate()
+      end,
+      desc = 'Debug: Quit',
+    },
+    {
+      '<leader>db',
+      function()
+        require('dap').toggle_breakpoint()
+      end,
+      desc = 'Debug: Toggle Breakpoint',
+    },
+    {
+      '<leader>dB',
+      function()
+        require('dap').set_breakpoint(vim.fn.input 'Breakpoint condition: ')
+      end,
+      desc = 'Debug: Set Breakpoint',
+    },
+    {
+      '<leader>dl',
+      function()
+        require('dapui').toggle()
+      end,
+      desc = 'Debug: See [l]ast session result.',
+    },
+
+    -- Start / Continue (F5)
     {
       '<F5>',
       function()
@@ -38,8 +69,26 @@ return {
       function()
         require('dap').continue()
       end,
-      desc = 'Debug: [S]tart/Continue',
+      desc = 'Debug: Start/Continue',
     },
+    -- Restart (Shift + F5)
+    {
+      '<S-F5>',
+      function()
+        require('dap').terminate()
+        require('dap').continue()
+      end,
+      desc = 'Debug: Restart Session',
+    },
+    -- Terminate/Stop (Ctrl + Shift + F5)
+    {
+      '<C-S-F5>',
+      function()
+        require('dap').terminate()
+      end,
+      desc = 'Debug: Terminate Session',
+    },
+
     {
       '<F1>',
       function()
@@ -61,20 +110,6 @@ return {
       end,
       desc = 'Debug: Step Out',
     },
-    {
-      '<leader>db',
-      function()
-        require('dap').toggle_breakpoint()
-      end,
-      desc = 'Debug: Toggle Breakpoint',
-    },
-    {
-      '<leader>dB',
-      function()
-        require('dap').set_breakpoint(vim.fn.input 'Breakpoint condition: ')
-      end,
-      desc = 'Debug: Set Breakpoint',
-    },
     -- Toggle to see last session result. Without this, you can't see session output in case of unhandled exception.
     {
       '<F7>',
@@ -82,13 +117,6 @@ return {
         require('dapui').toggle()
       end,
       desc = 'Debug: See last session result.',
-    },
-    {
-      '<leader>dl',
-      function()
-        require('dapui').toggle()
-      end,
-      desc = 'Debug: See [l]ast session result.',
     },
   },
   config = function()
@@ -110,6 +138,13 @@ return {
         -- Update this to ensure that you have the debuggers for the langs you want
         -- 'delve',
         'codelldb',
+      },
+    }
+
+    require('dap-go').setup {
+      -- Hier den Pfad aus 'which dlv' eintragen
+      delve = {
+        path = vim.fn.expand '~/go/bin/dlv',
       },
     }
 

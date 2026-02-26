@@ -8,7 +8,7 @@ vim.g.have_nerd_font = true
 vim.opt.number = true
 vim.opt.relativenumber = true
 
-vim.opt.termguicolors = false
+vim.opt.termguicolors = true
 vim.opt.mouse = 'a'
 vim.opt.showmode = false
 
