@@ -36,13 +36,17 @@ vim.keymap.set('n', '<A-l>', '<C-w><C->>', { desc = 'Increase window width' })
 vim.keymap.set('n', '<A-j>', '<C-w><C-->', { desc = 'Decrease window hight' })
 vim.keymap.set('n', '<A-k>', '<C-w><C-+>', { desc = 'Increase window hight' })
 
--- load the session for the current directory
 vim.keymap.set('n', '<leader>ws', function()
+  require('persistence').save()
+end, { desc = 'Load session in cwd' })
+
+-- load the session for the current directory
+vim.keymap.set('n', '<leader>wo', function()
   require('persistence').load()
 end, { desc = 'Load session in cwd' })
 
 -- select a session to load
-vim.keymap.set('n', '<leader>wS', function()
+vim.keymap.set('n', '<leader>wO', function()
   require('persistence').select()
 end, { desc = 'Select session to load' })
 
