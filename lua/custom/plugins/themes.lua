@@ -12,7 +12,7 @@ return {
     init = function()
       require('catppuccin').setup {
         integrations = {
-          lualine = true,
+          lualine = false,
         },
         transparent_background = true,
         custom_highlights = function(colors)

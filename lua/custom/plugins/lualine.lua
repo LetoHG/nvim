@@ -1,6 +1,6 @@
 return {
   'nvim-lualine/lualine.nvim',
-  dependencies = { 'nvim-tree/nvim-web-devicons', 'catppuccin/nvim' },
+  dependencies = { 'nvim-tree/nvim-web-devicons', 'catppuccin' },
   event = 'VeryLazy',
   config = function()
     -- Custom Lualine component to show attached language server
@@ -19,7 +19,7 @@ return {
       return ' ' .. table.concat(c, '|')
     end
 
-    -- local custom_catppuccin = require 'lualine.themes.catppuccin'
+    -- local custom_catppuccin = require 'lualine.themes.catppuccin-mocha'
     --
     -- -- Custom colours
     -- custom_catppuccin.normal.b.fg = '#cad3f5'
@@ -34,7 +34,7 @@ return {
 
     require('lualine').setup {
       options = {
-        theme = 'catppuccin',
+        theme = require('catppuccin.utils.lualine')(),
         component_separators = '',
         section_separators = { left = '', right = '' },
         -- section_separators = { left = '', right = '' },
