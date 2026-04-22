@@ -1,6 +1,6 @@
 return {
   'nvim-lualine/lualine.nvim',
-  dependencies = { 'nvim-tree/nvim-web-devicons' },
+  dependencies = { 'nvim-tree/nvim-web-devicons', 'catppuccin/nvim' },
   event = 'VeryLazy',
   config = function()
     -- Custom Lualine component to show attached language server
@@ -19,22 +19,22 @@ return {
       return ' ' .. table.concat(c, '|')
     end
 
-    local custom_catppuccin = require 'lualine.themes.catppuccin'
-
-    -- Custom colours
-    custom_catppuccin.normal.b.fg = '#cad3f5'
-    custom_catppuccin.insert.b.fg = '#cad3f5'
-    custom_catppuccin.visual.b.fg = '#cad3f5'
-    custom_catppuccin.replace.b.fg = '#cad3f5'
-    custom_catppuccin.command.b.fg = '#cad3f5'
-    custom_catppuccin.inactive.b.fg = '#cad3f5'
-
-    custom_catppuccin.normal.c.fg = '#6e738d'
-    custom_catppuccin.normal.c.bg = '#1e2030'
+    -- local custom_catppuccin = require 'lualine.themes.catppuccin'
+    --
+    -- -- Custom colours
+    -- custom_catppuccin.normal.b.fg = '#cad3f5'
+    -- custom_catppuccin.insert.b.fg = '#cad3f5'
+    -- custom_catppuccin.visual.b.fg = '#cad3f5'
+    -- custom_catppuccin.replace.b.fg = '#cad3f5'
+    -- custom_catppuccin.command.b.fg = '#cad3f5'
+    -- custom_catppuccin.inactive.b.fg = '#cad3f5'
+    --
+    -- custom_catppuccin.normal.c.fg = '#6e738d'
+    -- custom_catppuccin.normal.c.bg = '#1e2030'
 
     require('lualine').setup {
       options = {
-        theme = custom_catppuccin,
+        theme = 'catppuccin',
         component_separators = '',
         section_separators = { left = '', right = '' },
         -- section_separators = { left = '', right = '' },

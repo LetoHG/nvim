@@ -1,6 +1,7 @@
 return {
   'nvim-treesitter/nvim-treesitter-context',
   event = { 'BufReadPost', 'BufWritePost', 'BufNewFile' },
+  enable = false,
   opts = {
     multiline_threshold = 20, -- Maximum number of lines to show for a single context
     trim_scope = 'outer', -- Which context lines to discard if `max_lines` is exceeded. Choices: 'inner', 'outer'

@@ -7,15 +7,23 @@ return {
   { 'folke/tokyonight.nvim' },
   {
     'catppuccin/nvim',
+    name = 'catppuccin',
     priority = 1000, -- Make sure to load this before all the other start plugins.
     init = function()
       require('catppuccin').setup {
+        integrations = {
+          lualine = true,
+        },
         transparent_background = true,
         custom_highlights = function(colors)
           return {
             LineNr = { fg = colors.peach, bg = 'NONE' }, -- example with peach color
           }
         end,
+        styles = { -- Handles the styles of general hi groups (see `:h highlight-args`):
+          comments = { 'italic' }, -- Change the style of comments
+          conditionals = { 'italic' },
+        },
       }
       -- init = function()
       -- Load the colorscheme here.

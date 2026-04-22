@@ -27,7 +27,7 @@ return {
       { '<leader>ze', '<cmd>CopilotChatExplain<cr>', mode = 'v', desc = 'Copilot: Explain Code' },
       { '<leader>zr', '<cmd>CopilotChatReview<cr>', mode = 'v', desc = 'Copilot: Review Code' },
       { '<leader>zf', '<cmd>CopilotChatFix<cr>', mode = 'v', desc = 'Copilot: Fix Code Issues' },
-      { '<leader>zo', '<cmd>CopilotChatOpimize<cr>', mode = 'v', desc = 'Copilot: Opimize Code' },
+      { '<leader>zo', '<cmd>CopilotChatOptimize<cr>', mode = 'v', desc = 'Copilot: Optimize Code' },
       { '<leader>zd', '<cmd>CopilotChatDocs<cr>', mode = 'v', desc = 'Copilot: Generate Docs' },
       { '<leader>zt', '<cmd>CopilotChatTests<cr>', mode = 'v', desc = 'Copilot: Generate Tests' },
       { '<leader>zm', '<cmd>CopilotChatCommit<cr>', mode = 'n', desc = 'Copilot: Generate Commit Message' },
