@@ -41,7 +41,7 @@ return {
           console = 'integratedTerminal',
         },
         cmake_executor = { -- executor to use
-          name = 'quickfix', -- name of the executor
+          name = 'overseer', -- name of the executor
           opts = {}, -- the options the executor will get, possible values depend on the executor type. See `default_opts` for possible values.
           default_opts = { -- a list of default and possible values for executors
             quickfix = {
@@ -59,12 +59,7 @@ return {
             },
             overseer = {
               new_task_opts = {
-                strategy = {
-                  'toggleterm',
-                  direction = 'vertical',
-                  autos_croll = true,
-                  quit_on_exit = 'success',
-                },
+                strategy = nil,
               }, -- options to pass into the `overseer.new_task` command
               on_new_task = function(task)
                 require('overseer').open { enter = false, direction = 'right' }
@@ -90,7 +85,7 @@ return {
           },
         },
         cmake_runner = { -- runner to use
-          name = 'terminal', -- name of the runner
+          name = 'overseer', -- name of the runner
           opts = {}, -- the options the runner will get, possible values depend on the runner type. See `default_opts` for possible values.
           default_opts = { -- a list of default and possible values for runners
             quickfix = {
@@ -108,14 +103,11 @@ return {
             },
             overseer = {
               new_task_opts = {
-                strategy = {
-                  'toggleterm',
-                  direction = 'vertical',
-                  autos_croll = true,
-                  quit_on_exit = 'success',
-                },
+                strategy = nil,
               }, -- options to pass into the `overseer.new_task` command
-              on_new_task = function(task) end, -- a function that gets overseer.Task when it is created, before calling `task:start`
+              on_new_task = function(task)
+                require('overseer').open { enter = false, direction = 'right' }
+              end, -- a function that gets overseer.Task when it is created, before calling `task:start`
             },
             terminal = {
               name = 'Main Terminal',
