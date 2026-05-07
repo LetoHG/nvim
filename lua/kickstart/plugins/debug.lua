@@ -195,7 +195,63 @@ return {
       },
     }
 
+    -- Pick CMake target to debug
+
+    local pickers = require 'telescope.pickers'
+    local finders = require 'telescope.finders'
+    local actions = require 'telescope.actions'
+    local action_state = require 'telescope.actions.state'
+    local conf = require('telescope.config').values
+
+    local function select_cmake_target(callback)
+      local build_dir = vim.fn.getcwd() .. '/build'
+      local executables = vim.fn.glob(build_dir .. '/**/*', false, true)
+
+      local targets = {}
+      for _, file in ipairs(executables) do
+        if vim.fn.executable(file) == 1 and not file:match 'CMake' then
+          table.insert(targets, file)
+        end
+      end
+
+      pickers
+        .new({}, {
+          prompt_title = 'CMake Targets',
+          finder = finders.new_table { results = targets },
+          sorter = conf.generic_sorter {},
+          attach_mappings = function(prompt_bufnr)
+            actions.select_default:replace(function()
+              local selection = action_state.get_selected_entry()
+              actions.close(prompt_bufnr)
+              callback(selection[1])
+            end)
+            return true
+          end,
+        })
+        :find()
+    end
+
     dap.configurations.cpp = {
+      {
+        name = 'Launch CMake Target',
+        type = 'codelldb',
+        request = 'launch',
+        program = function()
+          local co = coroutine.running()
+          select_cmake_target(function(target)
+            coroutine.resume(co, target)
+          end)
+          return coroutine.yield()
+        end,
+        args = function()
+          local input = vim.fn.input 'Arguments: '
+          return vim.split(input, ' ') -- Splits by spaces into a table
+        end,
+        cwd = '${workspaceFolder}',
+        stopOnEntry = false,
+      },
+      -- }
+      -- dap.configurations.cpp = {
       {
         name = 'Launch with args',
         type = 'codelldb', -- Change this based on your debugger (e.g., gdb, codelldb)

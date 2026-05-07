@@ -1,42 +1,42 @@
 return {
-  -- {
-  --   'MeanderingProgrammer/markdown.nvim',
-  --   main = 'render-markdown',
-  --   name = 'render-markdown',
-  --   enable = false,
-  --   dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-tree/nvim-web-devicons' },
-  --   opts = {
-  --     file_types = { 'markdown' },
-  --     exclude = {
-  --       buftypes = { 'nofile', 'prompt', 'terminal' },
-  --     },
-  --   },
-  --   config = function(_, opts)
-  --     require('render-markdown').setup(opts)
-  --
-  --     -- Extra safety: disable in floating windows
-  --     vim.api.nvim_create_autocmd('BufEnter', {
-  --       callback = function(args)
-  --         local win = vim.fn.bufwinid(args.buf)
-  --         if win ~= -1 then
-  --           local config = vim.api.nvim_win_get_config(win)
-  --           if config.relative ~= '' then
-  --             vim.b[args.buf].render_markdown_enabled = false
-  --           end
-  --         end
-  --       end,
-  --     })
-  --   end,
-  -- },
-  -- {
-  --   'iamcco/markdown-preview.nvim',
-  --   cmd = { 'MarkdownPreviewToggle', 'MarkdownPreview', 'MarkdownPreviewStop' },
-  --   ft = { 'markdown' },
-  --   build = function()
-  --     vim.fn['mkdp#util#install']()
-  --   end,
-  --   enable = false,
-  -- },
+  {
+    'MeanderingProgrammer/markdown.nvim',
+    main = 'render-markdown',
+    name = 'render-markdown',
+    enable = false,
+    dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-tree/nvim-web-devicons' },
+    opts = {
+      file_types = { 'markdown' },
+      exclude = {
+        buftypes = { 'nofile', 'prompt', 'terminal' },
+      },
+    },
+    -- config = function(_, opts)
+    --   require('render-markdown').setup(opts)
+    --
+    --   -- Extra safety: disable in floating windows
+    --   vim.api.nvim_create_autocmd('BufEnter', {
+    --     callback = function(args)
+    --       local win = vim.fn.bufwinid(args.buf)
+    --       if win ~= -1 then
+    --         local config = vim.api.nvim_win_get_config(win)
+    --         if config.relative ~= '' then
+    --           vim.b[args.buf].render_markdown_enabled = false
+    --         end
+    --       end
+    --     end,
+    --   })
+    -- end,
+  },
+  {
+    'iamcco/markdown-preview.nvim',
+    cmd = { 'MarkdownPreviewToggle', 'MarkdownPreview', 'MarkdownPreviewStop' },
+    ft = { 'markdown' },
+    build = function()
+      vim.fn['mkdp#util#install']()
+    end,
+    enable = false,
+  },
   -- {
   --   'epwalsh/obsidian.nvim',
   --   version = 'v3.9.0', -- recommended, use latest release instead of latest commit
@@ -58,16 +58,16 @@ return {
   --     -- see below for full list of optional dependencies 👇
   --   },
   --   opts = {
-  --     workspaces = {
-  --       {
-  --         name = 'personal',
-  --         path = '~/vaults/my-second-brain/',
-  --       },
-  --       {
-  --         name = 'work',
-  --         path = '~/vaults/work',
-  --       },
-  --     },
+  --     -- workspaces = {
+  --     --   {
+  --     --     name = 'personal',
+  --     --     path = '~/vaults/my-second-brain/',
+  --     --   },
+  --     --   {
+  --     --     name = 'work',
+  --     --     path = '~/vaults/work',
+  --     --   },
+  --     -- },
   --
   --     -- see below for full list of options 👇
   --   },

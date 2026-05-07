@@ -2,7 +2,7 @@ return {
   { -- Highlight, edit, and navigate code
     'nvim-treesitter/nvim-treesitter',
     build = ':TSUpdate',
-    main = 'nvim-treesitter.configs', -- Sets main module to use for opts
+    -- main = 'nvim-treesitter.configs', -- Sets main module to use for opts
     -- [[ Configure Treesitter ]] See `:help nvim-treesitter`
     opts = {
       ensure_installed = {
@@ -41,7 +41,7 @@ return {
     --    - Show your current context: https://github.com/nvim-treesitter/nvim-treesitter-context
     --    - Treesitter + textobjects: https://github.com/nvim-treesitter/nvim-treesitter-textobjects
     config = function(_, opts)
-      require('nvim-treesitter.configs').setup(opts)
+      -- require('nvim-treesitter.configs').setup(opts)
 
       -- A custom fold expression function
       -- It keeps include statements unfolded while using treesitter for everything else.
