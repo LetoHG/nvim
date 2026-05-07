@@ -1,6 +1,11 @@
 return {
   {
+    'github/copilot.vim',
+    event = 'InsertEnter',
+  },
+  {
     'CopilotC-Nvim/CopilotChat.nvim',
+    event = 'VimEnter',
     dependencies = {
       'github/copilot.vim',
       {
@@ -9,6 +14,25 @@ return {
       },
     },
     build = 'make tiktoken',
+    cmd = {
+      'CopilotChat',
+      'CopilotChatOpen',
+      'CopilotChatClose',
+      'CopilotChatToggle',
+      'CopilotChatStop',
+      'CopilotChatReset',
+      'CopilotChatSave',
+      'CopilotChatLoad',
+      'CopilotChatPrompts',
+      'CopilotChatModels',
+      'CopilotChatExplain',
+      'CopilotChatReview',
+      'CopilotChatFix',
+      'CopilotChatOptimize',
+      'CopilotChatDocs',
+      'CopilotChatTests',
+      'CopilotChatCommit',
+    },
     opts = {
       -- See Configuration section for options
     },

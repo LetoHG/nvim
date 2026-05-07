@@ -1,7 +1,16 @@
 return {
   { -- Highlight, edit, and navigate code
     'nvim-treesitter/nvim-treesitter',
+    branch = 'master',
+    lazy = false,
     build = ':TSUpdate',
+    dependencies = {
+      {
+        'nvim-treesitter/nvim-treesitter-textobjects',
+        branch = 'master',
+        lazy = false,
+      },
+    },
     -- main = 'nvim-treesitter.configs', -- Sets main module to use for opts
     -- [[ Configure Treesitter ]] See `:help nvim-treesitter`
     opts = {
@@ -32,7 +41,32 @@ return {
         additional_vim_regex_highlighting = { 'ruby' },
       },
       indent = { enable = true, disable = { 'ruby' } },
-      fold = { enable = true },
+      textobjects = {
+        select = {
+          enable = true,
+          lookahead = true,
+          keymaps = {
+            ['af'] = '@function.outer',
+            ['if'] = '@function.inner',
+            ['ac'] = '@class.outer',
+            ['ic'] = '@class.inner',
+            ['ap'] = '@parameter.outer',
+            ['ip'] = '@parameter.inner',
+          },
+        },
+        move = {
+          enable = true,
+          set_jumps = true,
+          goto_next_start = {
+            [']m'] = '@function.outer',
+            [']]'] = '@class.outer',
+          },
+          goto_previous_start = {
+            ['[m'] = '@function.outer',
+            ['[['] = '@class.outer',
+          },
+        },
+      },
     },
     -- There are additional nvim-treesitter modules that you can use to interact
     -- with nvim-treesitter. You should go explore a few and see what interests you:
@@ -41,7 +75,17 @@ return {
     --    - Show your current context: https://github.com/nvim-treesitter/nvim-treesitter-context
     --    - Treesitter + textobjects: https://github.com/nvim-treesitter/nvim-treesitter-textobjects
     config = function(_, opts)
-      -- require('nvim-treesitter.configs').setup(opts)
+      require('nvim-treesitter.configs').setup(opts)
+
+      local ts_query = require 'nvim-treesitter.query'
+      local original_insert_to_path = ts_query.insert_to_path
+      ts_query.insert_to_path = function(object, path, value)
+        if type(value) == 'table' and #value == 1 and type(value[1]) == 'userdata' then
+          value = value[1]
+        end
+
+        return original_insert_to_path(object, path, value)
+      end
 
       -- A custom fold expression function
       -- It keeps include statements unfolded while using treesitter for everything else.
