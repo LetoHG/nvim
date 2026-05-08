@@ -56,6 +56,20 @@ return {
     },
     opts = {
       strategy = 'terminal',
+      component_aliases = {
+        default = {
+          'on_exit_set_status',
+          'custom.cmake_progress',
+          'on_complete_notify',
+          { 'on_complete_dispose', require_view = { 'SUCCESS', 'FAILURE' } },
+        },
+        default_builtin = {
+          'on_exit_set_status',
+          'custom.cmake_progress',
+          'on_complete_dispose',
+          { 'unique', soft = true },
+        },
+      },
       task_list = {
         direction = 'right',
         min_width = 40,

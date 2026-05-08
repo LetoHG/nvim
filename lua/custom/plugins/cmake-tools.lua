@@ -3,6 +3,23 @@ return {
     'Civitasv/cmake-tools.nvim',
     config = function()
       local osys = require 'cmake-tools.osys'
+      local cmake_log = require 'cmake-tools.log'
+
+      cmake_log.notify = function(msg, log_level)
+        if log_level ~= vim.log.levels.ERROR then
+          return
+        end
+
+        local headline = vim.split(msg, '\n', { trimempty = true })[1] or 'CMake task failed'
+        vim.notify(headline .. ' (see Overseer for details)', log_level, { title = 'CMakeTools' })
+      end
+
+      cmake_log.info = function() end
+      cmake_log.warn = function() end
+      cmake_log.error = function(msg)
+        cmake_log.notify(msg, vim.log.levels.ERROR)
+      end
+
       require('cmake-tools').setup {
         cmake_command = 'cmake', -- this is used to specify cmake command path
         ctest_command = 'ctest', -- this is used to specify ctest command path
