@@ -4,6 +4,7 @@ return {
     config = function()
       local osys = require 'cmake-tools.osys'
       local cmake_log = require 'cmake-tools.log'
+      local cmake_queue = require 'custom.cmake_queue'
 
       cmake_log.notify = function(msg, log_level)
         if log_level ~= vim.log.levels.ERROR then
@@ -189,6 +190,9 @@ return {
         cmake_virtual_text_support = true, -- Show the target related to current file using virtual text (at right corner)
       }
       vim.keymap.set('n', '<leader>cb', ':CMakeBuild<CR>', { silent = true })
+      vim.keymap.set('n', '<leader>cB', function()
+        cmake_queue.select_and_queue_target()
+      end, { silent = true, desc = 'Queue CMake build target' })
       vim.keymap.set('n', '<leader>cr', ':CMakeRun<CR>', { silent = true })
       vim.keymap.set('n', '<leader>ct', ':CMakeSelectBuildTarget<CR>', { silent = true })
       vim.keymap.set('n', '<leader>ck', ':CMakeSelectKit<CR>', { silent = true })
@@ -208,6 +212,19 @@ return {
       vim.keymap.set('n', '<leader>cor', ':CMakeOpenRunner<CR>', { silent = true })
       vim.keymap.set('n', '<leader>cce', ':CMakeCloseExecutor<CR>', { silent = true })
       vim.keymap.set('n', '<leader>ccr', ':CMakeCloseRunner<CR>', { silent = true })
+
+      vim.api.nvim_create_user_command('CMakeQueueBuild', function(opts)
+        if #opts.fargs == 0 then
+          cmake_queue.select_and_queue_target()
+        else
+          cmake_queue.queue_targets(opts.fargs)
+        end
+      end, {
+        nargs = '*',
+        complete = function()
+          return cmake_queue.complete_targets()
+        end,
+      })
     end,
   },
 }

@@ -7,11 +7,20 @@ local ts_utils = require 'nvim-treesitter.ts_utils'
 local parsers = require 'nvim-treesitter.parsers'
 
 local function get_byte_offset(buf, row, col)
-  return api.nvim_buf_get_offset(buf, row) + vim.fn.byteidx(api.nvim_buf_get_lines(buf, row, row + 1, false)[1], col)
+  local line_count = api.nvim_buf_line_count(buf)
+  if row >= line_count then
+    return api.nvim_buf_get_offset(buf, line_count)
+  end
+
+  local line = api.nvim_buf_get_lines(buf, row, row + 1, false)[1] or ''
+  return api.nvim_buf_get_offset(buf, row) + vim.fn.byteidx(line, col)
 end
 
-local function normalize_node(node)
+local function normalize_node(node, which)
   if type(node) == 'table' and node[1] then
+    if which == 'last' then
+      return node[#node]
+    end
     return node[1]
   end
 
@@ -19,7 +28,7 @@ local function normalize_node(node)
 end
 
 local function node_start(node, buf)
-  node = normalize_node(node)
+  node = normalize_node(node, 'first')
   if node.start then
     return node:start()
   end
@@ -29,7 +38,7 @@ local function node_start(node, buf)
 end
 
 local function node_end(node, buf)
-  node = normalize_node(node)
+  node = normalize_node(node, 'last')
   if node.end_ then
     return node:end_()
   end
@@ -97,7 +106,14 @@ function TSRange:named_child_count()
 end
 
 function TSRange:iter_children()
-  local raw_iterator = self:parent().iter_children()
+  local parent = self:parent()
+  if not parent then
+    return function()
+      return nil
+    end
+  end
+
+  local raw_iterator = parent:iter_children()
   return function()
     while true do
       local node = raw_iterator()
@@ -115,7 +131,7 @@ end
 
 function TSRange:collect_children(filter_fun)
   local children = {}
-  for _, c in self:iter_children() do
+  for c in self:iter_children() do
     if not filter_fun or filter_fun(c) then
       table.insert(children, c)
     end
@@ -129,7 +145,7 @@ end
 
 function TSRange:named_child(index)
   return self:collect_children(function(c)
-    return c.named()
+    return c:named()
   end)[index + 1]
 end
 

@@ -77,14 +77,68 @@ return {
     config = function(_, opts)
       require('nvim-treesitter.configs').setup(opts)
 
-      local ts_query = require 'nvim-treesitter.query'
-      local original_insert_to_path = ts_query.insert_to_path
-      ts_query.insert_to_path = function(object, path, value)
-        if type(value) == 'table' and #value == 1 and type(value[1]) == 'userdata' then
-          value = value[1]
+      local function normalize_tsnode(node)
+        if type(node) == 'table' and #node == 1 and type(node[1]) == 'userdata' then
+          return node[1]
         end
 
-        return original_insert_to_path(object, path, value)
+        return node
+      end
+
+      local original_get_node_text = vim.treesitter.get_node_text
+      vim.treesitter.get_node_text = function(node, source, opts_)
+        return original_get_node_text(normalize_tsnode(node), source, opts_)
+      end
+
+      local original_get_range = vim.treesitter.get_range
+      vim.treesitter.get_range = function(node, source, metadata)
+        return original_get_range(normalize_tsnode(node), source, metadata)
+      end
+
+      local ts_query = require 'nvim-treesitter.query'
+      local function normalize_match(match)
+        if type(match) ~= 'table' then
+          return match
+        end
+
+        if type(match.node) == 'table' and #match.node >= 1 and type(match.node[1]) == 'userdata' then
+          match.node = match.node[1]
+        end
+
+        for _, value in pairs(match) do
+          if type(value) == 'table' then
+            normalize_match(value)
+          end
+        end
+
+        return match
+      end
+
+      local original_get_capture_matches_recursively = ts_query.get_capture_matches_recursively
+      ts_query.get_capture_matches_recursively = function(bufnr, capture_or_fn, query_type)
+        local matches = original_get_capture_matches_recursively(bufnr, capture_or_fn, query_type)
+        if query_type ~= 'textobjects' then
+          return matches
+        end
+
+        for _, match in ipairs(matches) do
+          normalize_match(match)
+        end
+
+        return matches
+      end
+
+      local original_find_best_match = ts_query.find_best_match
+      ts_query.find_best_match = function(bufnr, capture_string, query_group, filter_predicate, scoring_function, root)
+        if query_group ~= 'textobjects' then
+          return original_find_best_match(bufnr, capture_string, query_group, filter_predicate, scoring_function, root)
+        end
+
+        return original_find_best_match(bufnr, capture_string, query_group, function(match)
+          return filter_predicate(normalize_match(match))
+        end, function(match)
+          return scoring_function(normalize_match(match))
+        end, root)
       end
 
       -- A custom fold expression function

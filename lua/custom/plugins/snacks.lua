@@ -23,7 +23,7 @@ return {
       -- input = { enabled = true },
       -- notifier = { enabled = true },
       -- quickfile = { enabled = true },
-      -- scroll = { enabled = true },
+      scroll = { enabled = true },
       -- statuscolumn = { enabled = true },
       -- toggle = { enabled = true },
       -- words = { enabled = true },
