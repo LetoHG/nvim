@@ -242,7 +242,17 @@ return {
   {
     'folke/todo-comments.nvim',
     event = { 'BufReadPre', 'BufNewFile' },
-    optional = true,
+    opts = {
+      highlight = {
+        pattern = {
+          [[.*<(KEYWORDS)\s*:]],
+          [[.*<(KEYWORDS)\([^)]*\)\s*:]],
+        },
+      },
+      search = {
+        pattern = [[\b(KEYWORDS)(\([^)]+\))?:]],
+      },
+    },
     keys = {
       {
         '<leader>pt',
