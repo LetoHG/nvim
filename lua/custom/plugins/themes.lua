@@ -18,6 +18,7 @@ return {
         custom_highlights = function(colors)
           return {
             LineNr = { fg = colors.peach, bg = 'NONE' }, -- example with peach color
+            GitSignsCurrentLineBlame = { fg = colors.blue, bg = 'NONE' },
           }
         end,
         styles = { -- Handles the styles of general hi groups (see `:h highlight-args`):

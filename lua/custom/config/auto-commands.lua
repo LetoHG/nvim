@@ -50,8 +50,16 @@ vim.api.nvim_create_autocmd('FileType', {
 -- })
 
 local function load_custom_agents()
-  local chat = require 'CopilotChat'
-  local config = require 'CopilotChat.config'
+  local ok, copilot = pcall(require, 'custom.config.copilot')
+  if ok and not copilot.has_supported_node() then
+    return
+  end
+
+  local chat_ok = pcall(require, 'CopilotChat')
+  local config_ok, config = pcall(require, 'CopilotChat.config')
+  if not chat_ok or not config_ok then
+    return
+  end
 
   -- Pfade definieren
   local global_dir = vim.fn.expand '~/.copilot/agents'

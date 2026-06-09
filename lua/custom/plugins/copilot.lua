@@ -1,11 +1,16 @@
+local copilot = require 'custom.config.copilot'
+local copilot_enabled = copilot.notify_if_unsupported()
+
 return {
   {
     'github/copilot.vim',
     event = 'InsertEnter',
+    enabled = copilot_enabled,
   },
   {
     'CopilotC-Nvim/CopilotChat.nvim',
     event = 'VimEnter',
+    enabled = copilot_enabled,
     dependencies = {
       'github/copilot.vim',
       {
