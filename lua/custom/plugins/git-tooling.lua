@@ -8,11 +8,6 @@ return {
     dependencies = {
       'nvim-lua/plenary.nvim', -- required
       'sindrets/diffview.nvim', -- optional - Diff integration
-
-      -- Only one of these is needed.
-      'nvim-telescope/telescope.nvim', -- optional
-      'ibhagwan/fzf-lua', -- optional
-      'echasnovski/mini.pick', -- optional
     },
     config = true,
   },
@@ -91,7 +86,7 @@ return {
   {
     'ThePrimeagen/git-worktree.nvim',
     dependencies = {
-      'nvim-telescope/telescope.nvim',
+      { 'nvim-telescope/telescope.nvim', branch = '0.1.x' },
     },
     config = function()
       local git_wt = require 'git-worktree'

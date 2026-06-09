@@ -158,40 +158,96 @@ return {
       },
       -- Snacks Picker
       {
-        '<leader>pf',
+        '<leader>sh',
         function()
-          require('snacks').picker.files()
+          require('snacks').picker.help()
         end,
-        desc = 'Find Files (Snacks Picker)',
+        desc = '[S]earch [H]elp',
       },
       {
-        '<leader>pc',
-        function()
-          require('snacks').picker.files { cwd = vim.fn.stdpath 'config' }
-        end,
-        desc = 'Find Config File',
-      },
-      {
-        '<leader>ps',
-        function()
-          require('snacks').picker.grep { layout = 'ivy' }
-        end,
-        desc = 'Grep word',
-      },
-      {
-        '<leader>pws',
-        function()
-          require('snacks').picker.grep_word()
-        end,
-        desc = 'Search Visual selection or Word',
-        mode = { 'n', 'x' },
-      },
-      {
-        '<leader>pk',
+        '<leader>sk',
         function()
           require('snacks').picker.keymaps { layout = 'ivy' }
         end,
-        desc = 'Search Keymaps (Snacks Picker)',
+        desc = '[S]earch [K]eymaps',
+      },
+      {
+        '<leader>sf',
+        function()
+          require('snacks').picker.files()
+        end,
+        desc = '[S]earch [F]iles',
+      },
+      {
+        '<leader>ss',
+        function()
+          require('snacks').picker()
+        end,
+        desc = '[S]earch [S]elect Picker',
+      },
+      {
+        '<leader>sw',
+        function()
+          require('snacks').picker.grep_word()
+        end,
+        desc = '[S]earch current [W]ord',
+        mode = { 'n', 'x' },
+      },
+      {
+        '<leader>sg',
+        function()
+          require('snacks').picker.grep { layout = 'ivy' }
+        end,
+        desc = '[S]earch by [G]rep',
+      },
+      {
+        '<leader>sd',
+        function()
+          require('snacks').picker.diagnostics()
+        end,
+        desc = '[S]earch [D]iagnostics',
+      },
+      {
+        '<leader>sr',
+        function()
+          require('snacks').picker.resume()
+        end,
+        desc = '[S]earch [R]esume',
+      },
+      {
+        '<leader>s.',
+        function()
+          require('snacks').picker.recent()
+        end,
+        desc = '[S]earch Recent Files ("." for repeat)',
+      },
+      {
+        '<leader>s/',
+        function()
+          require('snacks').picker.grep_buffers { layout = 'ivy' }
+        end,
+        desc = '[S]earch [/] in Open Files',
+      },
+      {
+        '<leader>sn',
+        function()
+          require('snacks').picker.files { cwd = vim.fn.stdpath 'config' }
+        end,
+        desc = '[S]earch [N]eovim files',
+      },
+      {
+        '<leader><leader>',
+        function()
+          require('snacks').picker.buffers()
+        end,
+        desc = '[ ] Find existing buffers',
+      },
+      {
+        '<leader>/',
+        function()
+          require('snacks').picker.lines()
+        end,
+        desc = '[/] Fuzzily search in current buffer',
       },
       -- Git Stuff
       {
@@ -208,21 +264,6 @@ return {
           require('snacks').picker.colorschemes { layout = 'ivy' }
         end,
         desc = 'Pick Color Schemes',
-      },
-      {
-        '<leader>vh',
-        function()
-          require('snacks').picker.help()
-        end,
-        desc = 'Help Pages',
-      },
-      -- Resume picking
-      {
-        '<leader>pr',
-        function()
-          require('snacks').picker.resume()
-        end,
-        desc = 'Resume last picker',
       },
       {
         '<leader>i',
@@ -242,7 +283,9 @@ return {
   {
     'folke/todo-comments.nvim',
     event = { 'BufReadPre', 'BufNewFile' },
+    dependencies = { 'nvim-lua/plenary.nvim' },
     opts = {
+      signs = false,
       highlight = {
         pattern = {
           [[.*<(KEYWORDS)\s*:]],

@@ -48,6 +48,7 @@ return {
         { '<leader>o', group = '[O]verseer' },
         { '<leader>r', group = '[R]ename' },
         { '<leader>s', group = '[S]earch' },
+        { '<leader>v', group = '[V]S Tasks' },
         { '<leader>w', group = '[W]orkspace' },
         { '<leader>x', group = 'Diagnostics / Trouble' },
         { '<leader>z', group = 'Copilot', mode = { 'n', 'v' } },
